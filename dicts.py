@@ -5,7 +5,14 @@ def create_inventory(items):
     :param items: list - list of items to create an inventory from.
     :return: dict - the inventory dictionary.
     """
-    return {}
+    inventory = dict()
+    for i in items:
+        counter = 0
+        for k in items:
+            if i == k:
+                counter += 1
+                inventory[i] = counter  
+    return inventory
 
 
 def add_items(inventory, items):
@@ -15,7 +22,13 @@ def add_items(inventory, items):
     :param items: list - list of items to update the inventory with.
     :return: dict - the inventory updated with the new items.
     """
-    return {}
+     for i in set(items):
+        if i in inventory:
+            counter = items.count(i)
+            inventory[i] += counter
+        else:
+            inventory[i] = items.count(i)
+    return inventory
 
 
 def decrement_items(inventory, items):
@@ -25,7 +38,12 @@ def decrement_items(inventory, items):
     :param items: list - list of items to decrement from the inventory.
     :return: dict - updated inventory with items decremented.
     """
-    return {}
+     for i in set(items):
+        if inventory[i] != 0:
+            inventory[i] -= items.count(i)
+        if inventory[i] < 0:
+            inventory[i] = 0
+    return inventory
 
 
 def remove_item(inventory, item):
@@ -35,7 +53,9 @@ def remove_item(inventory, item):
     :param item: str - item to remove from the inventory.
     :return: dict - updated inventory with item removed. Current inventory if item does not match.
     """
-    return {}
+     if item in inventory.keys():
+         del inventory[item]
+    return inventory
 
 
 def list_inventory(inventory):
@@ -44,5 +64,9 @@ def list_inventory(inventory):
     :param inventory: dict - an inventory dictionary.
     :return: list of tuples - list of key, value pairs from the inventory dictionary.
     """
-    return {}
+     new_list = []
+    for k,v in inventory.items():
+        if v > 0:
+            new_list.append((k,v))
+    return new_list
 
